@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--weather cdm<link rel>-->
+    <link rel="stylesheet" href="./assets/css/style.css"/>
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+    <header class="hero">
+        <h1 class="app-title">Weather Dashboard</h1>
+    </header>
+
+    <main class="flex-row justify-space-between">
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <h3 class="card-header text-uppercase">Search for a City</h3>
+                
+                    <input  id="city-name" placeholder="City name" type="text" class="form-input"/>
+                    <button class="form-btn" id="search">Search</button>
+               
+            </div>
+            <div class="card">
+                <h3 class="card-header text-uppercase">Search History</h3>
+                <div class="card-body" id="history-btn">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-8">
+            <h2 class="subtitle">Showing weather for: <span id="weather-search-term"></span></h2>
+            <div id="weather-container" class="list-group"></div>
+            <div id="forecast-container" class="card"></div>
+        </div>
+    </main>
+    
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
