@@ -7,7 +7,8 @@ var humCurrentDisplay = document.querySelector("#hum-current");
 var uviCurrentDisplay = document.querySelector("#uv-current");
 var historyCon = document.querySelector("#history-btn");
 var foreCastContainer = document.querySelector("#forecast-container");
-var historyArray = [];
+var citiesHistory = JSON.parse(localStorage.getItem("citiesStored") || "[]");
+var resetBtn = document.querySelector("#reset-storage")
 
 let storeHistory = function (searchTerm) {
     let historyBtn = document.createElement("button")
@@ -15,15 +16,15 @@ let storeHistory = function (searchTerm) {
     historyBtn.textContent = searchTerm
     //append btn to history container
     historyCon.appendChild(historyBtn)
-    historyArray.push("")
-    localStorage.setITem("citiesStored",JSON.stringify(historyArray));
+    citiesHistory.push(searchTerm);
+    localStorage.setItem("citiesStored", JSON.stringify(citiesHistory));
 }
     
 
-function searchWeather (event) { 
+function searchWeather (event, researchTerm) { 
     event.preventDefault();
     //get value from input element
-    let cityName = cityNameInput.value.trim() || searchTerm;
+    let cityName = cityNameInput.value.trim() || researchTerm;
 
     if (cityName) {
         //format the openweather geo api url
@@ -107,50 +108,73 @@ let displayWeather = function (searchTerm, daily) {
     let uviValue = daily[0].uvi;
     uviCurrentDisplay.textContent = uviValue;
 
-    // console.log(foreCastContainer)
-    // for (var i = 1; i < daily.length; i++) {
-    //     //create carddiv
-    //     const cardDiv = document.createElement("div")
-    //     //assing class attribute card
-    //     cardDiv.setAttribute("class", "card")
+ // Cards for forecasts
+    console.log(foreCastContainer)
+
+    for (var i = 1; i < daily.length - 2; i++) {
+        //convert time 
+        let cardTimeStamp = daily[i].dt;
+        let cardDate = new Date(cardTimeStamp * 1000);
+        var cardDay = cardDate.getDate();
+        var cardMonth = cardDate.getMonth()+1;
+        var cardYear = cardDate.getFullYear();
+        let cardFormattedTime = cardDay + "/" + cardMonth + '/' + cardYear;
         
-    //     //find temp 
-    //     let tempValue = daily[i].temp.day;
-    //     //create p element for temperature
-    //     let tempContainer = document.createElement("p");
-    //     //set textContent to temp
-    //     tempContainer.textContent = "Temp: " + tempValue + "°C";
-    //      //append to cardDiv
-    //      cardDiv.appendChild(tempContainer);
+        //create carddiv
+        const cardDiv = document.createElement("div")
+        //assing class attribute card
+        cardDiv.setAttribute("class", "card d-md-inline-block mx-1 p-2")
 
-    //     //find wind speed 
-    //     let windValue = daily[i].wind_speed;
-    //     //create p element for wind
-    //     let windContainer = document.createElement("p");
-    //     //set textContent to wind
-    //     windContainer.textContent = "Wind" + windValue + "MPH";
-    //     //append to cardDiv
-    //     cardDiv.appendChild(windContainer);
+        //create p element for date 
+        let dateContainer = document.createElement("p");
+        //set textContent to date
+        dateContainer.textContent = cardFormattedTime
+        //append to cardDiv
+        cardDiv.appendChild(dateContainer);
+        
+        //find temp 
+        let tempValue = daily[i].temp.day;
+        //create p element for temperature
+        let tempContainer = document.createElement("p");
+        //set textContent to temp
+        tempContainer.textContent = "Temp: " + tempValue + "°C";
+         //append to cardDiv
+         cardDiv.appendChild(tempContainer);
 
-    //     //find humidity 
-    //     let humValue = daily[i].humidity;
-    //     let humContainer = document.createElement("p");
-    //     humContainer.textContent = "Humidity" + humValue + "%";
-    //     cardDiv.appendChild(humContainer);
+        //find wind speed 
+        let windValue = daily[i].wind_speed;
+        //create p element for wind
+        let windContainer = document.createElement("p");
+        //set textContent to wind
+        windContainer.textContent = "Wind: " + windValue + "MPH";
+        //append to cardDiv
+        cardDiv.appendChild(windContainer);
 
-       
-    //     foreCastContainer.appendChild(cardDiv);
-    // }
+        //find humidity 
+        let humValue = daily[i].humidity;
+        let humContainer = document.createElement("p");
+        humContainer.textContent = "Humidity: " + humValue + "%";
+        cardDiv.appendChild(humContainer);
+        
+        foreCastContainer.appendChild(cardDiv);
+
+    }
     
 
 
 }
-
-
-
-let test = function () {
-    console.log("button working")
+let resetStorage = function () {
+    localStorage.clear("citiesStored")
 }
 
-historyCon.addEventListener("click", test)
+
+let show = function (event) {
+// get target element from event
+  var targetEl = event.target 
+  console.log(targetEl)
+  let researchTerm = targetEl.value;
+  searchWeather (researchTerm)
+}
+resetBtn.addEventListener("click", resetStorage)
+historyCon.addEventListener("click", show)
 document.querySelector("#search").addEventListener("click", searchWeather)
