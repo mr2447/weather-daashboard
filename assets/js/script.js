@@ -5,7 +5,8 @@ var tempCurrentDisplay = document.querySelector("#temp-current");
 var windCurrentDisplay = document.querySelector("#wind-current");
 var humCurrentDisplay = document.querySelector("#hum-current");
 var uviCurrentDisplay = document.querySelector("#uv-current");
-var history = document.querySelector("#history-btn");
+var historyCon = document.querySelector("#history-btn");
+var foreCastContainer = document.querySelector("#forecast-container")
 
 
 function searchWeather (event) { 
@@ -95,44 +96,57 @@ let displayWeather = function (searchTerm, daily) {
     let uviValue = daily[0].uvi;
     uviCurrentDisplay.textContent = uviValue;
 
-
-    
-
-
-    // for (var i = 0; i < daily.length; i++) {
+    // console.log(foreCastContainer)
+    // for (var i = 1; i < daily.length; i++) {
+    //     //create carddiv
+    //     const cardDiv = document.createElement("div")
+    //     //assing class attribute card
+    //     cardDiv.setAttribute("class", "card")
+        
     //     //find temp 
     //     let tempValue = daily[i].temp.day;
     //     //create p element for temperature
     //     let tempContainer = document.createElement("p");
     //     //set textContent to temp
-    //     tempContainer.textContent = tempValue + "°C";
-    //     //append to weatherContainer
-    //     weatherContainer.appendChild(tempContainer)
+    //     tempContainer.textContent = "Temp: " + tempValue + "°C";
+    //      //append to cardDiv
+    //      cardDiv.appendChild(tempContainer);
 
     //     //find wind speed 
     //     let windValue = daily[i].wind_speed;
     //     //create p element for wind
     //     let windContainer = document.createElement("p");
     //     //set textContent to wind
-    //     windContainer.textContent = windValue + "MPH";
-    //     //append to weather Container
-    //     weatherContainer.appendChild(windContainer);
+    //     windContainer.textContent = "Wind" + windValue + "MPH";
+    //     //append to cardDiv
+    //     cardDiv.appendChild(windContainer);
 
     //     //find humidity 
     //     let humValue = daily[i].humidity;
     //     let humContainer = document.createElement("p");
-    //     humContainer.textContent = humValue + "%";
-    //     weatherContainer.appendChild(humContainer);
+    //     humContainer.textContent = "Humidity" + humValue + "%";
+    //     cardDiv.appendChild(humContainer);
+
+       
+    //     foreCastContainer.appendChild(cardDiv);
     // }
+    
+
+
 }
 
 let storeHistory = function (searchTerm) {
+    console.log(history)
     let historyBtn = document.createElement("button")
     console.log(historyBtn)
     historyBtn.textContent = searchTerm
     //append btn to history container
-    history.appendChild(historyBtn)
-    
+    historyCon.appendChild(historyBtn)
 }
 
+let test = function () {
+    console.log("button working")
+}
+
+historyCon.addEventListener("click", test)
 document.querySelector("#search").addEventListener("click", searchWeather)
