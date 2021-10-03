@@ -8,11 +8,11 @@ var uviCurrentDisplay = document.querySelector("#uv-current");
 var historyCon = document.querySelector("#history-btn");
 var foreCastContainer = document.querySelector("#forecast-container");
 var citiesHistory = JSON.parse(localStorage.getItem("citiesStored") || "[]");
-var resetBtn = document.querySelector("#reset-storage")
+var resetBtn = document.querySelector("#reset-storage");
+var iconPlace = document.querySelector("#iconPlace")
 
 let storeHistory = function (searchTerm) {
     let historyBtn = document.createElement("button")
-    console.log(historyBtn)
     historyBtn.textContent = searchTerm
     //append btn to history container
     historyCon.appendChild(historyBtn)
@@ -53,7 +53,7 @@ function searchWeather (event, researchTerm) {
                                  console.log(data2.daily)
                                  displayWeather(cityName, data2.daily)
                                  storeHistory(cityName)
-                             });
+                             })
                          } else {
                              alert('Error: City Not Found')
                          };
@@ -80,10 +80,13 @@ let displayWeather = function (searchTerm, daily) {
     var year = date.getFullYear();
     let formattedTime = day + "/" + month + '/' + year;
 
+    //get Icon 
+    let iconCu = daily[0].weather[0].icon
+    console.log(iconCu)
 
     //display current city name 
     citySearchTerm.textContent = searchTerm + " " + formattedTime;
-
+    iconPlace.innerHTML = "<img src=" + "'http://openweathermap.org/img/wn/" + iconCu + "@2x.png'" + "/>";
     //display current temperature 
     console.log(tempCurrentDisplay);
     //find temp value
@@ -131,6 +134,11 @@ let displayWeather = function (searchTerm, daily) {
         dateContainer.textContent = cardFormattedTime
         //append to cardDiv
         cardDiv.appendChild(dateContainer);
+
+        //create p element for icon
+        let cardIcon = document.createElement("p");
+        //set innerHtml
+        
         
         //find temp 
         let tempValue = daily[i].temp.day;
