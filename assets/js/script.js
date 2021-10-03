@@ -1,7 +1,11 @@
 var cityNameInput = document.querySelector("#city-name");
-var citySearchTerm = document.querySelector("#weather-search-term")
-var weatherContainer = document.querySelector("#weather-container")
+var citySearchTerm = document.querySelector("#weather-search-term");
+var weatherContainer = document.querySelector("#weather-container");
 var tempCurrentDisplay = document.querySelector("#temp-current");
+var windCurrentDisplay = document.querySelector("#wind-current");
+var humCurrentDisplay = document.querySelector("#hum-current");
+var uviCurrentDisplay = document.querySelector("#uv-current");
+var history = document.querySelector("#history-btn");
 
 
 function searchWeather (event) { 
@@ -34,11 +38,12 @@ function searchWeather (event) {
                              response2.json().then(function(data2) {
                                  console.log(data2)
                                  console.log(data2.daily)
-                                 displayWeather(data2.timezone, data2.daily)
+                                 displayWeather(cityName, data2.daily)
+                                 storeHistory(cityName)
                              });
                          } else {
                              alert('Error: City Not Found')
-                         }
+                         };
                      })
                 })
             } else {
@@ -46,14 +51,14 @@ function searchWeather (event) {
             }
         })
         //clear old content
-        cityNameInput.valie="";
+        cityNameInput.value="";
     } else {
         alert("Please enter a city name");
     }
 }
 
 let displayWeather = function (searchTerm, daily) {
-    weatherContainer.textContent = "";
+
     //convert time 
     let timestamp = daily[0].dt;
     let date = new Date(timestamp * 1000);
@@ -63,15 +68,36 @@ let displayWeather = function (searchTerm, daily) {
     let formattedTime = day + "/" + month + '/' + year;
 
 
-    //display search city name 
-    citySearchTerm.textContent = searchTerm + " " + formattedTime
+    //display current city name 
+    citySearchTerm.textContent = searchTerm + " " + formattedTime;
+
     //display current temperature 
-    console.log(tempCurrentDisplay)
+    console.log(tempCurrentDisplay);
     //find temp value
     let tempValueCu = daily[0].temp.day;
-    console.log(tempValueCu)
+    console.log(tempValueCu);
     //input value 
-    tempCurrentDisplay.textContent = tempValueCu;
+    tempCurrentDisplay.textContent = tempValueCu + "°C";
+
+    //display current Wind
+    console.log(windCurrentDisplay)
+    //find wind value
+    let windValueCu = daily[0].wind_speed;
+    windCurrentDisplay.textContent = windValueCu + "MPH";
+
+    //display hum
+    console.log(humCurrentDisplay)
+    let humValueCu = daily[0].humidity;
+    humCurrentDisplay.textContent = humValueCu + "%";
+
+    //display uvi
+    console.log(uviCurrentDisplay);
+    let uviValue = daily[0].uvi;
+    uviCurrentDisplay.textContent = uviValue;
+
+
+    
+
 
     // for (var i = 0; i < daily.length; i++) {
     //     //find temp 
@@ -98,8 +124,14 @@ let displayWeather = function (searchTerm, daily) {
     //     humContainer.textContent = humValue + "%";
     //     weatherContainer.appendChild(humContainer);
     // }
-    
+}
 
+let storeHistory = function (searchTerm) {
+    let historyBtn = document.createElement("button")
+    console.log(historyBtn)
+    historyBtn.textContent = searchTerm
+    //append btn to history container
+    history.appendChild(historyBtn)
     
 }
 
