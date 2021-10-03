@@ -15,6 +15,7 @@ let storeHistory = function (searchTerm) {
     historyBtn.textContent = searchTerm
     //append btn to history container
     historyCon.appendChild(historyBtn)
+    historyArray.push("")
     localStorage.setITem("citiesStored",JSON.stringify(historyArray));
 }
     
