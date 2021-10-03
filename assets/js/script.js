@@ -1,4 +1,6 @@
 var cityNameInput = document.querySelector("#city-name");
+var citySearchTerm = document.querySelector("#weather-search-term")
+var weatherContainer = document.querySelector("#weather-container")
 
 function searchWeather () { 
     //get value from input element
@@ -13,17 +15,23 @@ function searchWeather () {
         fetch (apiUrl).then(function(response) {
             if(response.ok) {
                 response.json().then(function(data) {
-                    var lon = data.coord.lon
-                    var lat = data.coord.lat
+                    console.log(data)
+                    var lat = data[0].lat
+                    var lon = data[0].lon
+                    console.log(lat)
+                    console.log(lon)
                     //Get weather Info
                     let apiUrl2 = "https://api.openweathermap.org/data/2.5/onecall?" +
                       "lat=" + lat +
-                        "&lon=" + lon +
+                        "&lon=" + lon + 
+                        "&units=metric" +
                      "&appid=ff9a02b937539db6bdc17cba9723e9a6"
-                     fetch(apiUrl2).then(function(response) {
-                         if(response.ok) {
-                             response.json().then(function(data2) {
+                     fetch(apiUrl2).then(function(response2) {
+                         if(response2.ok) {
+                             response2.json().then(function(data2) {
                                  console.log(data2)
+                                 console.log(data2.daily)
+                                 displayWeather(data2.timezone, data2.daily)
                              });
                          } else {
                              alert('Error: City Not Found')
@@ -41,4 +49,50 @@ function searchWeather () {
     }
 }
 
-document.querySelector("#search").addEventListener("submit", searchWeather)
+let displayWeather = function (searchTerm, daily) {
+    weatherContainer.textContent = "";
+    //convert time 
+    let timestamp = daily[0].dt;
+    let date = new Date(timestamp * 1000);
+    var day = date.getDate();
+    var month = date.getMonth()+1;
+    var year = date.getFullYear();
+    let formattedTime = day + "/" + month + '/' + year;
+
+
+
+    citySearchTerm.textContent = searchTerm + " " + formattedTime
+    for (var i = 0; i < daily.length; i++) {
+        //find temp 
+        let tempValue = daily[i].temp.day;
+        //create p element for temperature
+        let tempContainer = document.createElement("p");
+        //set textContent to temp
+        tempContainer.textContent = tempValue + "°C";
+        //append to weatherContainer
+        weatherContainer.appendChild(tempContainer)
+
+        //find wind speed 
+        let windValue = daily[i].wind_speed;
+        //create p element for wind
+        let windContainer = document.createElement("p");
+        //set textContent to wind
+        windContainer.textContent = windValue + "MPH";
+        //append to weather Container
+        weatherContainer.appendChild(windContainer);
+
+        //find humidity 
+        let humValue = daily[i].humidity;
+        let humContainer = document.createElement("p");
+        humContainer.textContent = humValue + "%";
+        weatherContainer.appendChild(humContainer);
+
+        // 
+
+    }
+    
+
+    
+}
+
+document.querySelector("#search").addEventListener("click", searchWeather)
