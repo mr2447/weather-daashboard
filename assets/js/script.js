@@ -96,7 +96,7 @@ let displayWeather = function (searchTerm, daily) {
 
     //display current city name 
     citySearchTerm.textContent = searchTerm + " " + formattedTime;
-    iconPlace.innerHTML = "<img class='figure-img img-fluid' src=" + "'http://openweathermap.org/img/wn/" + iconCu + "@2x.png'" + "/>";
+    iconPlace.innerHTML = "<img class='figure-img img-fluid' src=" + "'https://openweathermap.org/img/wn/" + iconCu + "@2x.png'" + "/>";
     //display current temperature 
     console.log(tempCurrentDisplay);
     //find temp value
@@ -160,7 +160,7 @@ let displayWeather = function (searchTerm, daily) {
         //create p element for icon
         let cardIconCon = document.createElement("p");
         //set innerHtml to icon
-        cardIconCon.innerHTML = "<img class='figure-img img-fluid' src=" + "'http://openweathermap.org/img/wn/" + cardIcon + "@2x.png'" + "/>";
+        cardIconCon.innerHTML = "<img class='figure-img img-fluid' src=" + "'https://openweathermap.org/img/wn/" + cardIcon + "@2x.png'" + "/>";
         //append to cardDiv
         cardDiv.appendChild(cardIconCon);
         
