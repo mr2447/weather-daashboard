@@ -24,7 +24,7 @@ let storeHistory = function (searchTerm) {
 function searchWeather (event, researchTerm) { 
     event.preventDefault();
     //get value from input element
-    let cityName = cityNameInput.value.trim() || researchTerm;
+    let cityName = researchTerm || cityNameInput.value.trim();
 
     if (cityName) {
         //format the openweather geo api url
@@ -172,8 +172,8 @@ let show = function (event) {
 // get target element from event
   var targetEl = event.target 
   console.log(targetEl)
-  let researchTerm = targetEl.value;
-  searchWeather (researchTerm)
+  let researchTerm = targetEl.textContent;
+  searchWeather (event, researchTerm)
 }
 resetBtn.addEventListener("click", resetStorage)
 historyCon.addEventListener("click", show)
