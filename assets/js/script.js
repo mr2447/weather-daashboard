@@ -11,6 +11,8 @@ var citiesHistory = JSON.parse(localStorage.getItem("citiesStored") || "[]");
 var resetBtn = document.querySelector("#reset-storage");
 var iconPlace = document.querySelector("#iconPlace")
 
+historyCon.textContent = JSON.parse(localStorage.getItem("citiesStored"));
+
 let storeHistory = function (searchTerm) {
     let historyBtn = document.createElement("button")
     historyBtn.textContent = searchTerm
@@ -86,7 +88,7 @@ let displayWeather = function (searchTerm, daily) {
 
     //display current city name 
     citySearchTerm.textContent = searchTerm + " " + formattedTime;
-    iconPlace.innerHTML = "<img src=" + "'http://openweathermap.org/img/wn/" + iconCu + "@2x.png'" + "/>";
+    iconPlace.innerHTML = "<img class='figure-img img-fluid' src=" + "'http://openweathermap.org/img/wn/" + iconCu + "@2x.png'" + "/>";
     //display current temperature 
     console.log(tempCurrentDisplay);
     //find temp value
@@ -135,10 +137,15 @@ let displayWeather = function (searchTerm, daily) {
         //append to cardDiv
         cardDiv.appendChild(dateContainer);
 
-        //create p element for icon
-        let cardIcon = document.createElement("p");
-        //set innerHtml
         
+        //get Icon 
+        let cardIcon = daily[i].weather[0].icon
+        //create p element for icon
+        let cardIconCon = document.createElement("p");
+        //set innerHtml to icon
+        cardIconCon.innerHTML = "<img class='figure-img img-fluid' src=" + "'http://openweathermap.org/img/wn/" + cardIcon + "@2x.png'" + "/>";
+        //append to cardDiv
+        cardDiv.appendChild(cardIconCon);
         
         //find temp 
         let tempValue = daily[i].temp.day;
@@ -173,6 +180,7 @@ let displayWeather = function (searchTerm, daily) {
 }
 let resetStorage = function () {
     localStorage.clear("citiesStored")
+    historyCon.innerHTML = "";
 }
 
 
