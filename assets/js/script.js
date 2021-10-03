@@ -6,13 +6,23 @@ var windCurrentDisplay = document.querySelector("#wind-current");
 var humCurrentDisplay = document.querySelector("#hum-current");
 var uviCurrentDisplay = document.querySelector("#uv-current");
 var historyCon = document.querySelector("#history-btn");
-var foreCastContainer = document.querySelector("#forecast-container")
+var foreCastContainer = document.querySelector("#forecast-container");
+var historyArray = [];
 
+let storeHistory = function (searchTerm) {
+    let historyBtn = document.createElement("button")
+    console.log(historyBtn)
+    historyBtn.textContent = searchTerm
+    //append btn to history container
+    historyCon.appendChild(historyBtn)
+    localStorage.setITem("citiesStored",JSON.stringify(historyArray));
+}
+    
 
 function searchWeather (event) { 
     event.preventDefault();
     //get value from input element
-    var cityName = cityNameInput.value.trim();
+    let cityName = cityNameInput.value.trim() || searchTerm;
 
     if (cityName) {
         //format the openweather geo api url
@@ -135,14 +145,7 @@ let displayWeather = function (searchTerm, daily) {
 
 }
 
-let storeHistory = function (searchTerm) {
-    console.log(history)
-    let historyBtn = document.createElement("button")
-    console.log(historyBtn)
-    historyBtn.textContent = searchTerm
-    //append btn to history container
-    historyCon.appendChild(historyBtn)
-}
+
 
 let test = function () {
     console.log("button working")
