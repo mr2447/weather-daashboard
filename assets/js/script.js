@@ -113,7 +113,7 @@ let displayWeather = function (searchTerm, daily) {
 
  // Cards for forecasts
     console.log(foreCastContainer)
-
+    foreCastContainer.innerHTML = "";
     for (var i = 1; i < daily.length - 2; i++) {
         //convert time 
         let cardTimeStamp = daily[i].dt;
