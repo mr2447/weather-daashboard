@@ -38,7 +38,7 @@ function searchWeather (event, researchTerm) {
 
     if (cityName) {
         //format the openweather geo api url
-        let apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" +
+        let apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" +
         cityName +
         "&appid=ff9a02b937539db6bdc17cba9723e9a6"
 
