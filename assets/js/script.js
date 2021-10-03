@@ -9,9 +9,17 @@ var historyCon = document.querySelector("#history-btn");
 var foreCastContainer = document.querySelector("#forecast-container");
 var citiesHistory = JSON.parse(localStorage.getItem("citiesStored") || "[]");
 var resetBtn = document.querySelector("#reset-storage");
-var iconPlace = document.querySelector("#iconPlace")
+var iconPlace = document.querySelector("#iconPlace");
 
-historyCon.textContent = JSON.parse(localStorage.getItem("citiesStored"));
+
+let displayStorage = JSON.parse(localStorage.getItem("citiesStored"));
+if (displayStorage) {
+    for (var i = 0; i < displayStorage.length; i++) {
+    let storageBtn = document.createElement("button");
+    storageBtn.textContent = displayStorage[i];
+    historyCon.appendChild(storageBtn);
+}
+};
 
 let storeHistory = function (searchTerm) {
     let historyBtn = document.createElement("button")
@@ -112,6 +120,15 @@ let displayWeather = function (searchTerm, daily) {
     console.log(uviCurrentDisplay);
     let uviValue = daily[0].uvi;
     uviCurrentDisplay.textContent = uviValue;
+    if (uviValue <= 2) {
+        uviCurrentDisplay.setAttribute("class", "bg-success p-1 px-3 rounded-3")
+    } else if (uviValue <= 5) {
+        uviCurrentDisplay.setAttribute("class", "bg-warning p-1 px-3 rounded-3")
+    } else if (uviValue <= 7) {
+        uviCurrentDisplay.setAttribute("class", "bg-orange p-1 px-3 rounded-3")
+    } else if (uviValue <= 10) {
+        uviCurrentDisplay.setAttribute("class", "bg-danger p-1 px-3 rounded-3")
+    }
 
  // Cards for forecasts
     console.log(foreCastContainer)
@@ -128,7 +145,7 @@ let displayWeather = function (searchTerm, daily) {
         //create carddiv
         const cardDiv = document.createElement("div")
         //assing class attribute card
-        cardDiv.setAttribute("class", "card d-md-inline-block mx-1 p-2")
+        cardDiv.setAttribute("class", "card d-md-inline-block mx-1 my-2 p-2 drk-blue text-center text-md-start")
 
         //create p element for date 
         let dateContainer = document.createElement("p");
