@@ -20,4 +20,4 @@ For traveler to see the weather outlook for multiple cities so that they can pla
 Made with ❤ by Marvin Ren
 ```
 ## Screen Shot
-![work day scheduler](./assets/image/weather-dashboard.jpeg)ashboard
+![work day scheduler](./assets/images/weather-dashboard.jpeg)
