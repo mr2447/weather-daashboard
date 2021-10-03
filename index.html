@@ -31,10 +31,21 @@
             </div>
 
             <div class="col-md-8 col-12">
-                <h2>Showing weather for: <span id="weather-search-term"></span></h2>
-                <div id="weather-container" class="list-group"></div>
-                <div id="forecast-container" class="card"></div>
+                <div class="row border border-dark">
+                    <h2>Showing weather for: <span id="weather-search-term"></span></h2>
+                    <div id="weather-container">
+                        <p>Temp: <span id="temp-current"></span></p>
+                        <p>Wind: <span id="wind-current"></span></p>
+                        <p>Humidity: <span id="hum-current"></span></p>
+                        <p>UV index: <span id="uv-current"></span></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="forecast-container" class="card">
+                    </div>
+                </div>
             </div>
+            
         </div>
     </main>
     

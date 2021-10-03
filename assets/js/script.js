@@ -1,8 +1,11 @@
 var cityNameInput = document.querySelector("#city-name");
 var citySearchTerm = document.querySelector("#weather-search-term")
 var weatherContainer = document.querySelector("#weather-container")
+var tempCurrentDisplay = document.querySelector("#temp-current");
 
-function searchWeather () { 
+
+function searchWeather (event) { 
+    event.preventDefault();
     //get value from input element
     var cityName = cityNameInput.value.trim();
 
@@ -60,36 +63,41 @@ let displayWeather = function (searchTerm, daily) {
     let formattedTime = day + "/" + month + '/' + year;
 
 
-
+    //display search city name 
     citySearchTerm.textContent = searchTerm + " " + formattedTime
-    for (var i = 0; i < daily.length; i++) {
-        //find temp 
-        let tempValue = daily[i].temp.day;
-        //create p element for temperature
-        let tempContainer = document.createElement("p");
-        //set textContent to temp
-        tempContainer.textContent = tempValue + "°C";
-        //append to weatherContainer
-        weatherContainer.appendChild(tempContainer)
+    //display current temperature 
+    console.log(tempCurrentDisplay)
+    //find temp value
+    let tempValueCu = daily[0].temp.day;
+    console.log(tempValueCu)
+    //input value 
+    tempCurrentDisplay.textContent = tempValueCu;
 
-        //find wind speed 
-        let windValue = daily[i].wind_speed;
-        //create p element for wind
-        let windContainer = document.createElement("p");
-        //set textContent to wind
-        windContainer.textContent = windValue + "MPH";
-        //append to weather Container
-        weatherContainer.appendChild(windContainer);
+    // for (var i = 0; i < daily.length; i++) {
+    //     //find temp 
+    //     let tempValue = daily[i].temp.day;
+    //     //create p element for temperature
+    //     let tempContainer = document.createElement("p");
+    //     //set textContent to temp
+    //     tempContainer.textContent = tempValue + "°C";
+    //     //append to weatherContainer
+    //     weatherContainer.appendChild(tempContainer)
 
-        //find humidity 
-        let humValue = daily[i].humidity;
-        let humContainer = document.createElement("p");
-        humContainer.textContent = humValue + "%";
-        weatherContainer.appendChild(humContainer);
+    //     //find wind speed 
+    //     let windValue = daily[i].wind_speed;
+    //     //create p element for wind
+    //     let windContainer = document.createElement("p");
+    //     //set textContent to wind
+    //     windContainer.textContent = windValue + "MPH";
+    //     //append to weather Container
+    //     weatherContainer.appendChild(windContainer);
 
-        // 
-
-    }
+    //     //find humidity 
+    //     let humValue = daily[i].humidity;
+    //     let humContainer = document.createElement("p");
+    //     humContainer.textContent = humValue + "%";
+    //     weatherContainer.appendChild(humContainer);
+    // }
     
 
     
